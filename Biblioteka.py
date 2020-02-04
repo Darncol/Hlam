@@ -55,13 +55,9 @@ def dobavitdeneg():
         if lave >= 0:
             global kowel
             kowel = kowel + lave
-
-
-
+            print("\n")
     except:
-        print("Vse huina davai po novoi")
-
-
+        print("Vse huina davai po novoi\n\n")
 
 
 kowel = 0
