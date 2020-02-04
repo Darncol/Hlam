@@ -1,13 +1,15 @@
 def zapisatknigu():
-
-    newknigaN = input("nazvanie:")
-    newknigaC = input("Cena:")
-
-    f = open("Biblioteka.txt", "a")
-    gotstr = newknigaN + ".," + newknigaC + "\n"
-    f.write(gotstr)
-    print("zapisano")
-    f.close()
+    try:
+        newknigaN = input("nazvanie:")
+        newknigaC = int(input("Cena:"))
+        if newknigaC >= 0:
+            f = open("Biblioteka.txt", "a")
+            gotstr = newknigaN + ".," + str(newknigaC) + "\n"
+            f.write(gotstr)
+            print("zapisano\n")
+            f.close()
+    except:
+        print("Cena ne pravilnaja baran\n")
 
 def pokazatknigi():
     spisokknig = vernutspisok()
