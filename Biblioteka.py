@@ -67,7 +67,7 @@ kowel = 0
 
 while True:
     print("Deneg$$$ =", kowel)
-    vvod = input("1 = zapisat knigu\n2 = pokazat knigi\n3 = pokazat cenu\n4 = dobavit deneg\n5 = vihod\n> ")
+    vvod = input("1 = zapisat knigu\n2 = pokazat knigi\n3 = pokazat cenu\n4 = dobavit deneg\n9 = vihod\n> ")
 
     if vvod == "1":
         zapisatknigu()
@@ -81,7 +81,7 @@ while True:
     elif vvod == "4":
         dobavitdeneg()
 
-    elif vvod == "5":
+    elif vvod == "9":
         print("exit")
         break
 
