@@ -64,15 +64,10 @@ def dobavitdeneg():
 
 
 
-
-
-
-
-
+kowel = 0
 
 
 while True:
-    kowel = 0
     print("Deneg$$$ =", kowel)
     vvod = input("1 = zapisat knigu\n2 = pokazat knigi\n3 = pokazat cenu\n4 = dobavit deneg\n5 = vihod\n> ")
 
