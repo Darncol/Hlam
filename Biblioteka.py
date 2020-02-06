@@ -102,30 +102,33 @@ def kupitknigu():
 
 kowel = 0
 
+def main():
+    while True:
+        print("Deneg$$$ =", kowel)
+        vvod = input("1 = zapisat knigu\n2 = pokazat knigi\n3 = pokazat cenu\n4 = dobavit deneg\n5 = kupit knigu\n9 = vihod\n> ")
 
-while True:
-    print("Deneg$$$ =", kowel)
-    vvod = input("1 = zapisat knigu\n2 = pokazat knigi\n3 = pokazat cenu\n4 = dobavit deneg\n5 = kupit knigu\n9 = vihod\n> ")
+        if vvod == "1":
+            zapisatknigu()
 
-    if vvod == "1":
-        zapisatknigu()
+        elif vvod == "2":
+            pokazatknigi()
 
-    elif vvod == "2":
-        pokazatknigi()
+        elif vvod == "3":
+            pokazatcenu()
 
-    elif vvod == "3":
-        pokazatcenu()
+        elif vvod == "4":
+            dobavitdeneg()
 
-    elif vvod == "4":
-        dobavitdeneg()
-
-    elif vvod == "5":
-        kupitknigu()
+        elif vvod == "5":
+            kupitknigu()
 
 
-    elif vvod == "9":
-        print("exit")
-        break
+        elif vvod == "9":
+            print("exit")
+            break
 
-    else :
-        print("naher")
+        else :
+            print("naher")
+
+if __name__ == "__main__":
+    main()
