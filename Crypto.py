@@ -1,7 +1,10 @@
 import os
 
 def crypt():
-    key = int(input("Ключь:"))
+    try:
+        key = int(input("Ключь:"))
+    except:
+        crypt()
     
     beg_cry = input('Текст для шифрования:')
     bukvi = list(beg_cry)
@@ -32,7 +35,10 @@ def uncrypt():
     un_wifr = []
     fin_wifr = []
 
-    key = int(input("Ключь:"))
+    try:
+        key = int(input("Ключь:"))
+    except:
+        uncrypt()
 
     f = open('Test.txt')
     a = f.read()
