@@ -1,6 +1,8 @@
 import os
 
 def crypt():
+    key = int(input("Ключь:"))
+    
     beg_cry = input('Текст для шифрования:')
     bukvi = list(beg_cry)
     wifrovanie = []
@@ -9,7 +11,7 @@ def crypt():
     for bukva in bukvi:
         a = bukva
         b = ord(a)
-        c = b + 7
+        c = b + key
         wifrovanie.append(c)
 
     for bukva1 in wifrovanie:
@@ -30,6 +32,8 @@ def uncrypt():
     un_wifr = []
     fin_wifr = []
 
+    key = int(input("Ключь:"))
+
     f = open('Test.txt')
     a = f.read()
     wifr = list(a)
@@ -38,7 +42,7 @@ def uncrypt():
     for bukva in wifr:
         a = bukva
         a = ord(a)
-        b = a - 7
+        b = a - key
         un_wifr.append(b)
 
     for bukva1 in un_wifr:
