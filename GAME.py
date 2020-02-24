@@ -1,33 +1,40 @@
 import os
 
-level = 1        # level - уровень
+level = 1        # level - уровень и жизни (level*10=hp)
 exp = 0         # exp - опыт
 stren = 1       # stren - урон
 dex = 1        # dex - будет влиять на шанс попадания
 luck = 1        # luck - будет влиять на силу монстров
 expp = 5        # expp - скил поинты
 
-def addskills(kuda,skolko):
+
+def addskills(kuda,skolko):  # добавить скиллов
     global stren,dex,luck,expp
-    if expp > 0:
-        if kuda == '1' and skolko <= expp:
-            stren += skolko
-            expp -= skolko
-        elif kuda == '2' and skolko <= expp:
-            dex += skolko
-            expp -= skolko
-        elif kuda == '3' and skolko <= expp:        
-            luck += skolko
-            expp -= skolko
-        else:
-            os.system('clear')
-            print('не хватает очков!')          
+    
+    if kuda == '1' and skolko <= expp:
+        stren += skolko
+        expp -= skolko
+    elif kuda == '2' and skolko <= expp:
+        dex += skolko
+        expp -= skolko
+    elif kuda == '3' and skolko <= expp:        
+        luck += skolko
+        expp -= skolko
     else:
-        print('не хватает очков!')
+        os.system('clear')
+        print('не хватает очков!')          
+    
 
-        
+def levelup(income_exp): # увеличение уровня и получение опыта с очками навыков
+    global exp,level,expp
+    exp += income_exp
+   
+    if exp > ((level**2)*100):
+        level += 1
+        expp += 5
+      
 
-def char():
+def char():  # посмотреть персонаж
     os.system('clear')
     global level,exp,expp,stren,dex,luck,expp
  
@@ -42,14 +49,20 @@ def char():
     vvod = input('1.добавить очки\n2.назад\n>')
 
     if vvod == '1':
-        kuda = input('Куда добавить?\n>')
-        skolko = int(input('Сколько?:'))
-        addskills(kuda,skolko)
+        if expp > 0:
+            kuda = input('Куда добавить?\n>')
+            skolko = int(input('Сколько?:'))
+            addskills(kuda,skolko)
+        else:
+            print('Не хватает очков')
     elif vvod == '2':
         pass
-    
+    else:
+        print('Не балуйся!')
 
 def fight():
+    income_exp = int(input("exp:"))
+    levelup(income_exp)
     return
 
 def main():
@@ -70,7 +83,7 @@ def main():
             char()
             
         elif vvod == '2':
-            pass
+            fight()
         elif vvod == '3':
             pass
 
