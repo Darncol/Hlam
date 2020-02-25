@@ -1,11 +1,5 @@
 import os
-
-level = 1        # level - уровень и жизни (level*10=hp)
-exp = 0         # exp - опыт
-stren = 1       # stren - урон
-dex = 1        # dex - будет влиять на шанс попадания
-luck = 1        # luck - будет влиять на силу монстров
-expp = 5        # expp - скил поинты
+import random
 
 
 def addskills(kuda,skolko):  # добавить скиллов
@@ -55,17 +49,42 @@ def char():  # посмотреть персонаж
             addskills(kuda,skolko)
         else:
             print('Не хватает очков')
+
     elif vvod == '2':
         pass
+    
     else:
         print('Не балуйся!')
 
-def fight():
-    income_exp = int(input("exp:"))
+def fightstats(): #статы персонажа перед боем
+    global hp,attack,armor
+    hp = (level * 100) + stren
+    attack = stren 
+    armor = dex
+    
+def exp_for_fight(): # получаемый опыт после боя income_exp
+    income_exp = (hpm+(attackm*10)+(armorm*10))
     levelup(income_exp)
-    return
+    
 
-def main():
+def fight():      # бой с монстром
+    fightstats()
+    monster()
+    while hp > 0 and hmp > 0:
+        vibor = input()
+    else:
+        print()
+        pass
+
+    
+def monster():   #сила монстра
+    global hpm,attackm,armorm
+    hpm = (random.randrange(hp)*1.5+(level*30))
+    attackm = random.randrange(attack)* 1.5
+    armorm = random.randrange(armor)*1.5
+    
+
+def main():     #главное меню
     os.system('clear')
     while True:
         print(f'''
@@ -86,5 +105,25 @@ def main():
             fight()
         elif vvod == '3':
             pass
+        else:
+            print('Не балуйся!')
+
+# статы персонажа
+level = 10        # level - уровень и жизни (level*10=hp)
+exp = 0         # exp - опыт
+stren = 10       # stren - урон и жизни
+dex = 10        # dex - броня
+luck = 1        # luck - будет влиять на силу монстров
+expp = 5        # expp - скил поинты
+
+# временые статы для боя
+hp = 0
+attack = 0
+armor = 0
+
+# временные статы монстра
+hpm = 0
+attackm =0
+armorm = 0
 
 main()
