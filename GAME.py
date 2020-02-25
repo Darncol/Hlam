@@ -1,6 +1,27 @@
 import os
 import random
 
+# статы персонажа
+level = 10        # level - уровень и жизни (level*10=hp)
+exp = 0         # exp - опыт
+stren = 10       # stren - урон и жизни
+dex = 10        # dex - броня
+luck = 1        # luck - будет влиять на силу монстров
+expp = 5        # expp - скил поинты
+
+# временые статы для боя
+hp = 0
+attack = 0
+armor = 0
+
+# временные статы монстра
+hpm = 0
+attackm =0
+armorm = 0
+
+#  опыт за победу
+temp_exp_for_win = 0
+damage = 0
 
 def addskills(kuda,skolko):  # добавить скиллов
     global stren,dex,luck,expp
@@ -63,17 +84,75 @@ def fightstats(): #статы персонажа перед боем
     armor = dex
     
 def exp_for_fight(): # получаемый опыт после боя income_exp
-    income_exp = (hpm+(attackm*10)+(armorm*10))
+    global temp_exp_for_win
+    income_exp = damage/10
+    temp_exp_for_win = income_exp
     levelup(income_exp)
+
+def obnulit_damag(): # обнуляем накопленный дамаг после боя
+    global damage
+    damage = 0
     
 
 def fight():      # бой с монстром
+    global hp,attack,armor,hpm,attackm,armorm
     fightstats()
     monster()
-    while hp > 0 and hmp > 0:
-        vibor = input()
+    while hpm > 0:
+        os.system('clear')
+        randnum1 = random.randrange(1,4)
+        randnum2 = random.randrange(1,4)
+        print (randnum1)
+
+        print(f"""
+        Персонаж:           Монстр:
+        Жизни:{hp}          Жизни:{hpm}
+        Урон:{attack}       Урон:{attackm}
+        Броня:{armor}       Броня:{armorm}""")
+
+        
+        vibor1 = int(input(""" 
+        куда ударить ?
+        1 = голова
+        2 = тело
+        3 = ноги
+        >"""))
+        
+
+        if vibor1 == randnum1:
+            print('Не попал!')
+                
+            
+        elif vibor1 != randnum1:
+            if vibor1 == range(1,4) and attack - armorm > 0:
+                 hpm -= (attack-armorm)
+            elif attack - armorm < 0: 
+                print('Удар слишком слабый и не нанесет урона,ты проиграл!')
+                break
+            else:
+                print('что-то пошло не так!')
+            
+
+        vibor2 = int(input(""" 
+        куда поставить блок ?
+        1 = голова
+        2 = тело
+        3 = ноги
+        >"""))
+
+        if vibor2 == randnum2:
+            print('Успешно защитился')
+        elif vibor2 != randnum2:
+            print()
+
+        if hp < 0:
+            print('Ты проиграл!')
+            break
+
+
     else:
-        print()
+        exp_for_fight()
+        print('Победа! ты получил опыта:',temp_exp_for_win)
         pass
 
     
@@ -107,23 +186,5 @@ def main():     #главное меню
             pass
         else:
             print('Не балуйся!')
-
-# статы персонажа
-level = 10        # level - уровень и жизни (level*10=hp)
-exp = 0         # exp - опыт
-stren = 10       # stren - урон и жизни
-dex = 10        # dex - броня
-luck = 1        # luck - будет влиять на силу монстров
-expp = 5        # expp - скил поинты
-
-# временые статы для боя
-hp = 0
-attack = 0
-armor = 0
-
-# временные статы монстра
-hpm = 0
-attackm =0
-armorm = 0
 
 main()
