@@ -1,5 +1,6 @@
 import os
 import random
+import math
 
 # статы персонажа
 level = 1        # level - уровень и жизни (level*10=hp)
@@ -85,7 +86,7 @@ def fightstats(): #статы персонажа перед боем
     
 def exp_for_fight(): # получаемый опыт после боя income_exp
     global temp_exp_for_win
-    income_exp = damage/10
+    income_exp = (damage/2) + (luck*5)
     temp_exp_for_win = income_exp
     levelup(income_exp)
 
@@ -214,6 +215,8 @@ def monster():   #сила монстра
 def main():     #главное меню
     os.system('clear')
     while True:
+        global exp
+        exp = math.ceil(exp)
         print(f'''
     Уровень:{level}
     Опыт:{exp}
