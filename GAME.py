@@ -2,12 +2,12 @@ import os
 import random
 
 # статы персонажа
-level = 10        # level - уровень и жизни (level*10=hp)
+level = 1        # level - уровень и жизни (level*10=hp)
 exp = 0         # exp - опыт
-stren = 10       # stren - урон и жизни
-dex = 10        # dex - броня
+stren = 20       # stren - урон и жизни
+dex = 5        # dex - броня
 luck = 1        # luck - будет влиять на силу монстров
-expp = 5        # expp - скил поинты
+expp = 10        # expp - скил поинты
 
 # временые статы для боя
 hp = 0
@@ -19,7 +19,7 @@ hpm = 0
 attackm =0
 armorm = 0
 
-#  опыт за победу
+# временный опыт за победу
 temp_exp_for_win = 0
 damage = 0
 
@@ -43,7 +43,7 @@ def addskills(kuda,skolko):  # добавить скиллов
 def levelup(income_exp): # увеличение уровня и получение опыта с очками навыков
     global exp,level,expp
     exp += income_exp
-   
+    obnulit_damag()
     if exp > ((level**2)*100):
         level += 1
         expp += 5
@@ -92,17 +92,13 @@ def exp_for_fight(): # получаемый опыт после боя income_ex
 def obnulit_damag(): # обнуляем накопленный дамаг после боя
     global damage
     damage = 0
-    
 
-def fight():      # бой с монстром
-    global hp,attack,armor,hpm,attackm,armorm
-    fightstats()
-    monster()
+def fight_process():
+    global hp,attack,armor,hpm,attackm,armorm,damage
     while hpm > 0:
-        os.system('clear')
         randnum1 = random.randrange(1,4)
         randnum2 = random.randrange(1,4)
-        print (randnum1)
+        # print (randnum1)
 
         print(f"""
         Персонаж:           Монстр:
@@ -110,57 +106,88 @@ def fight():      # бой с монстром
         Урон:{attack}       Урон:{attackm}
         Броня:{armor}       Броня:{armorm}""")
 
-        
-        vibor1 = int(input(""" 
-        куда ударить ?
-        1 = голова
-        2 = тело
-        3 = ноги
-        >"""))
-        
+        def udar(): #Удар
+            global hp,attack,armor,hpm,attackm,armorm,damage
+            try:
+                vibor1 = int(input(""" 
+                куда ударить ?
+                1 = голова
+                2 = тело
+                3 = ноги
+                >"""))
+            
+                if vibor1 == randnum1:
+                    print('Не попал!')
+                        
+                    
+                elif vibor1 != randnum1:
+                    if vibor1 in range(1,4):
+                        uron = attack-armorm
+                        hpm -= uron
+                        damage += uron
+                        print(f"Нанесено урона:{uron}")
+                    else:
+                        print('Не попал!')
+                else:
+                    print('s udarom beda')
+            except:
+                udar()
 
-        if vibor1 == randnum1:
-            print('Не попал!')
+        def block():  # блок
+            global hp,attack,armor,hpm,attackm,armorm,damage
+            try:    
+                vibor2 = int(input(""" 
+                куда поставить блок ?
+                1 = голова
+                2 = тело
+                3 = ноги
+                >"""))
                 
-            
-        elif vibor1 != randnum1:
-            if vibor1 == range(1,4) and attack - armorm > 0:
-                 hpm -= (attack-armorm)
-            elif attack - armorm < 0: 
-                print('Удар слишком слабый и не нанесет урона,ты проиграл!')
-                break
-            else:
-                print('что-то пошло не так!')
-            
 
-        vibor2 = int(input(""" 
-        куда поставить блок ?
-        1 = голова
-        2 = тело
-        3 = ноги
-        >"""))
+                if vibor2 == randnum2:
+                    print('Успешно защитился')
+                elif vibor2 != randnum2:
+                    
+                    uron = attackm - armor
+                    hp -= uron
+                    print(f'получено урона:{uron}')
 
-        if vibor2 == randnum2:
-            print('Успешно защитился')
-        elif vibor2 != randnum2:
-            print()
-
+            except:
+                block()    
+        udar()
+        block()
         if hp < 0:
             print('Ты проиграл!')
             break
-
-
     else:
         exp_for_fight()
         print('Победа! ты получил опыта:',temp_exp_for_win)
-        pass
+        
+def save():
+    a = [level,exp,stren,dex,expp]
+    b = ' '.join(a)
+    # f = open('GAME.txt','w')
+    # f.write(b)
+    # f.close()
+    print(b)
+
+def load():
+    pass
+
+def fight():      # бой с монстром
+    global hp,attack,armor,hpm,attackm,armorm
+    fightstats()
+    monster()
+    fight_process()
+    os.system('clear')
+    
 
     
 def monster():   #сила монстра
     global hpm,attackm,armorm
     hpm = (random.randrange(hp)*1.5+(level*30))
     attackm = random.randrange(attack)* 1.5
-    armorm = random.randrange(armor)*1.5
+    armorm = random.randrange(armor)
     
 
 def main():     #главное меню
@@ -175,14 +202,15 @@ def main():     #главное меню
     Свободных очков:{expp}
     ''')
         
-        vvod = input('1.Персонаж\n2.бой\n3.сохранить\n>')
+        vvod = input('1.Персонаж\n2.бой\n3.сохранить\n4.Загрузить\n>')
 
         if vvod == '1':
             char()
-            
         elif vvod == '2':
             fight()
         elif vvod == '3':
+            save()
+        elif vvod == '4':
             pass
         else:
             print('Не балуйся!')
