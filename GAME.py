@@ -93,7 +93,7 @@ def obnulit_damag(): # обнуляем накопленный дамаг пос
     global damage
     damage = 0
 
-def fight_process():
+def fight_process():    #  процесс боя
     global hp,attack,armor,hpm,attackm,armorm,damage
     while hpm > 0:
         randnum1 = random.randrange(1,4)
@@ -102,9 +102,9 @@ def fight_process():
 
         print(f"""
         Персонаж:           Монстр:
-        Жизни:{hp}          Жизни:{hpm}
-        Урон:{attack}       Урон:{attackm}
-        Броня:{armor}       Броня:{armorm}""")
+        Жизни:{hp}           Жизни:{hpm}
+        Урон:{attack}             Урон:{attackm}
+        Броня:{armor}             Броня:{armorm}""")
 
         def udar(): #Удар
             global hp,attack,armor,hpm,attackm,armorm,damage
@@ -163,16 +163,37 @@ def fight_process():
         exp_for_fight()
         print('Победа! ты получил опыта:',temp_exp_for_win)
         
-def save():
+def save():     # сохранение
     a = [level,exp,stren,dex,expp]
-    b = ' '.join(a)
-    # f = open('GAME.txt','w')
-    # f.write(b)
-    # f.close()
-    print(b)
+    b = []
 
-def load():
-    pass
+    for i in a:
+        i = str(i)
+        b.append(i)
+
+    b = ' '.join(b)
+    f = open('GAME.txt','w')
+    f.write(b)
+    f.close()
+    print(a,b)
+
+def load():     # загрузка
+    global level,exp,stren,dex,expp
+    a = []
+    f = open('GAME.txt')
+    b = f.read().split(' ')
+    for i in b:
+        i = int(i)
+        a.append(i)
+
+    level = a[0]
+    exp = a[1]
+    stren = a[2]
+    dex = a[3]
+    expp = a[4]
+
+    print(a)
+
 
 def fight():      # бой с монстром
     global hp,attack,armor,hpm,attackm,armorm
@@ -211,7 +232,7 @@ def main():     #главное меню
         elif vvod == '3':
             save()
         elif vvod == '4':
-            pass
+            load()
         else:
             print('Не балуйся!')
 
